@@ -69,6 +69,17 @@ void Pins::oscilaBuzzer(uint8_t tempoLigado, uint8_t tempoDesligado, uint8_t num
   }
 }
 
+void Pins::oscilaBuzzer(uint8_t tempoLigado, uint8_t tempoDesligado) {
+  uint8_t vezes = 6;
+  while (vezes > 0) {
+    digitalWrite(buzzer, HIGH);
+    delay(tempoLigado);
+    digitalWrite(buzzer, LOW);
+    delay(tempoDesligado);
+    vezes--;
+  }
+}
+
 bool Pins::leSensorNivel(){
   #ifdef SENSORNIVELPULLUP
     return !digitalRead(sensorNivel);
@@ -127,7 +138,8 @@ bool Pins::leBotaoReset() {
 
 #ifdef POTENCIOMETRO
   int Pins::lePotenciometro() {
-    return analogRead(potenciometro);
+    uint16_t potenciometro = analogRead(potenciometro);
+    return map(potenciometro, 0, 1024, 0, 255);
   }
 
   void Pins::ativaTriac(int potenciometro) {
@@ -135,6 +147,6 @@ bool Pins::leBotaoReset() {
   }
 
   int Pins::porcentagem(int potenciometro) {
-    return map(potenciometro, 0, 1024, 0, 100);
+    return map(potenciometro, 0, 255, 0, 100);
   }
 #endif // POTENCIOMETRO

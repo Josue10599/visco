@@ -21,7 +21,7 @@
       void zeraTempo();
       void desativaTempo();
       void ativaTempo();
-      String getTempo();
+      unsigned char getTempo();
       int getSegundo();
       int getMinuto();
       int getHora();

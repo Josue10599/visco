@@ -13,6 +13,7 @@
 
   #include "Tempo.h"
   #include "Pins.h"
+  #include "DisplayNextion.h"
 
   class Visco {
     public:
@@ -21,7 +22,8 @@
     private:
       Tempo tempo;
       Pins pins;
-      void atualizaDisplay();      
+      DisplayNextion tela;
+      int valorPorcentagem();      
   };
   
  #endif // VISCO_H

@@ -27,9 +27,7 @@ Tempo::Tempo(int periodo) {
   Timer1.initialize(periodo);
   Timer1.attachInterrupt(contaTempo);
   desativaTempo();
-  Tempo::hora = 0;
-  Tempo::minuto = 0;
-  Tempo::segundo = 0;
+  zeraTempo();
 }
 
 static void Tempo::contaTempo() {
@@ -60,13 +58,10 @@ void Tempo::zeraTempo() {
   Tempo::segundo = 0;
 }
 
-String Tempo::getTempo() {
-  String texto = String(Tempo::hora);
-  texto.concat(':');
-  texto.concat(Tempo::minuto);
-  texto.concat(':');
-  texto.concat(Tempo::segundo);
-  return texto;
+unsigned char Tempo::getTempo() {
+  unsigned char txt[10];
+  sprintf(txt, "%02d:%02d:%02d", Tempo::hora, Tempo::minuto, Tempo::segundo);
+  return txt;
 }
 
 int Tempo::getSegundo() {

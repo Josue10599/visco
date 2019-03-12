@@ -59,6 +59,7 @@
       void desativaBuzzer();
       void temporizaBuzzer(uint8_t);
       void oscilaBuzzer(uint8_t, uint8_t, uint8_t);
+      void oscilaBuzzer(uint8_t, uint8_t);
       bool leSensorNivel();
       bool leSensorBarreira();
       bool leBotaoReset();
