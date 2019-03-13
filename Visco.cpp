@@ -10,14 +10,12 @@
 #include "Visco.h"
 
 bool inicia;
-int posicao;
 
 Visco::Visco() {
   pins = Pins();
   tempo = Tempo();
   tela = DisplayNextion();
   inicia = false;
-  posicao = 0;
 }
 
 void Visco::processo() {
@@ -33,12 +31,7 @@ void Visco::processo() {
   }
   if(!inicia) {
     tempo.desativaTempo();
-    if(posicao >= 3) {
-      posicao = 0;
-      tela.zeraRelatorios();
-    }
-    tela.adicionaTempo(tempo.getHora(), tempo.getMinuto(), tempo.getSegundo(), posicao);
-    posicao++;
+    tela.proximoTempo();
     tempo.zeraTempo();
     pins.oscilaBuzzer(2000,1000); 
   }
