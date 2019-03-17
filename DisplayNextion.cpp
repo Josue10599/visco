@@ -11,10 +11,7 @@
 #include "DisplayNextion.h"
 
 TelaRela DisplayNextion::rela = TelaRela();
-
-NexText DisplayNextion::txtPorc = NexText(INFO, TXTPORC, "txtPorc");
-NexText DisplayNextion::txtTempo = NexText(INFO, TXTTEMPO, "txtTempo");
-NexProgressBar DisplayNextion::progVelocidade = NexProgressBar(INFO, PROGVEL, "progVel");
+TelaInfo DisplayNextion::info = TelaInfo();
 
 uint8_t DisplayNextion::tela;
 
@@ -24,11 +21,9 @@ DisplayNextion::DisplayNextion(void) {
   // Configura tela Relatórios
   DisplayNextion::rela = TelaRela();
   // Configura componentes da tela Informações
-  DisplayNextion::txtPorc = NexText(INFO, TXTPORC, "txtPorc");
-  DisplayNextion::txtTempo = NexText(INFO, TXTTEMPO, "txtTempo");
-  DisplayNextion::progVelocidade = NexProgressBar(INFO, PROGVEL, "progVel");
+  DisplayNextion::info = TelaInfo();
   // Atribui valores as variáveis de localização
-  DisplayNextion::tela = 0;
+  DisplayNextion::tela = 1;
 }
 
 bool DisplayNextion::recebeSerial(void) {
@@ -67,31 +62,13 @@ bool DisplayNextion::recebeSerial(void) {
   }
 }
 
-void DisplayNextion::atualizaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo) {
-  unsigned char tempo[10];
-  sprintf(tempo, "%02d:%02d:%02d", hora, minuto, segundo);
-  DisplayNextion::txtTempo.setText(tempo);
-}
-
-void DisplayNextion::atualizaVelocidade(int porcentagem) {
-  unsigned char velocidade[10];
-  sprintf(velocidade, "%02d%%", porcentagem);
-  DisplayNextion::txtPorc.setText(velocidade);
-  DisplayNextion::progVelocidade.setValue(porcentagem);
-}
-
 void DisplayNextion::atualizaDisplay(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t porcentagem, bool sensor){
   recebeSerial();
   if (confTelaInfo()) {
-    atualizaVelocidade(porcentagem);
-    delay(60);
-    if (confTempo(hora, minuto, segundo))
-      atualizaTempo(hora, minuto, segundo);
+    DisplayNextion::info.atualizaTelaInfo(hora, minuto, segundo, porcentagem);
   } else if (confTelaRela()) {
-   if (confTempo(hora, minuto, segundo))
-     rela.atualizaTelaRela(hora, minuto, segundo, sensor);
+    //DisplayNextion::rela.atualizaTelaRela(hora, minuto, segundo, sensor);
   }
-  delay(60);
 }
 
 void DisplayNextion::telaMenu(void) {
@@ -118,17 +95,11 @@ bool DisplayNextion::confTelaRela(void) {
   return (DisplayNextion::tela == RELA);
 }
 
-bool DisplayNextion::confTempo(uint8_t hora, uint8_t minuto, uint8_t segundo) {
-  return (hora != 0 || minuto != 0 || segundo != 0);
-}
-
 bool DisplayNextion::botaoHomePressionado(uint8_t page_id, uint8_t comp_id) {
   if ((page_id == INFO && comp_id == HOME_I) || (page_id == RELA && comp_id == HOME_R)) {
     telaMenu();
-    DisplayNextion::tela = 0;
     return true;
   } else {
-    DisplayNextion::tela = 0;
     return false;
   }
 }

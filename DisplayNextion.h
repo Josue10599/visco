@@ -14,21 +14,15 @@
  #include <Arduino.h>
  #include <Nextion.h>
  #include "TelaRela.h"
+ #include "TelaInfo.h"
 
  // Configura o número das telas
  #define MENU 0
- #define INFO 1
 
  // Configura o número dos componentes
  // Tela menu
  #define B_INFO 1
  #define B_RELA 2
-
- // Tela Info
- #define TXTPORC  3
- #define TXTTEMPO 4
- #define PROGVEL  2
- #define HOME_I   1
 
  // Comandos do display enviado por eventos
  #define BOTAO_PRESSIONADO  0x65
@@ -41,9 +35,7 @@
     void proximoTempo(void);
   private:
     static TelaRela rela;
-    static NexText txtTempo;
-    static NexText txtPorc;
-    static NexProgressBar progVelocidade;
+    static TelaInfo info;
     static uint8_t tempos[3];
     static uint8_t posicao;
     static uint8_t tela;
