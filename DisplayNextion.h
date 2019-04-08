@@ -15,17 +15,11 @@
  #include <Nextion.h>
  #include "TelaRela.h"
  #include "TelaInfo.h"
-
- // Configura o número das telas
- #define MENU 0
-
- // Configura o número dos componentes
- // Tela menu
- #define B_INFO 1
- #define B_RELA 2
+ #include "TelaMenu.h"
 
  // Comandos do display enviado por eventos
  #define BOTAO_PRESSIONADO  0x65
+ #define VARIAVEL_INVALIDA  0x1A
  #define COMANDO_FINALIZADO 0xFF  
 
  class DisplayNextion {

@@ -21,11 +21,15 @@ TelaInfo::TelaInfo(void) {
 }
 
 void TelaInfo::atualizaTelaInfo(uint8_t hora, uint8_t minuto, uint8_t segundo, int porcentagem) {
+  delay(10);
   if (confTempo(hora, minuto, segundo)) {
     atualizaTempo(hora, minuto, segundo);
+    delay(10);
   }
   atualizaBarra(porcentagem);
+  delay(10);
   atualizaVelocidade(porcentagem);
+  delay(10);
 }
 
 void TelaInfo::atualizaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo) {
@@ -38,7 +42,6 @@ void TelaInfo::atualizaVelocidade(int velocidade) {
   unsigned char texto[10];
   sprintf(texto, "%02d%%", velocidade);
   TelaInfo::txtPorc.setText(texto);
-  TelaInfo::progVelocidade.setValue(velocidade);
 }
 
 void TelaInfo::atualizaBarra(int porcentagem) {

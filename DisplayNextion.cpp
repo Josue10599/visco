@@ -23,22 +23,24 @@ DisplayNextion::DisplayNextion(void) {
   // Configura componentes da tela Informações
   DisplayNextion::info = TelaInfo();
   // Atribui valores as variáveis de localização
-  DisplayNextion::tela = 1;
+  DisplayNextion::tela = 0;
 }
 
 bool DisplayNextion::recebeSerial(void) {
   static uint8_t texto[10];
   if (nexSerial.available() > 0) {
     uint8_t evento = nexSerial.read();
-    if (BOTAO_PRESSIONADO == evento) {
+    if (evento == BOTAO_PRESSIONADO) {
       if (nexSerial.available() >= 6) {
+        delay(10);
         texto[0] = evento;
         uint8_t i;
         for (i = 1; i < 7; i++) {
+          delay(10);
           texto[i] = nexSerial.read();
         }
         texto[i] = 0x00;
-        if (texto[4] == COMANDO_FINALIZADO && texto[5] == COMANDO_FINALIZADO && texto[6] == COMANDO_FINALIZADO) {
+        if (texto[4] == COMANDO_FINALIZADO || texto[5] == COMANDO_FINALIZADO || texto[6] == COMANDO_FINALIZADO) {
             if (botaoInfoPressionado(texto[1],texto[2])) {
               return true;
             } else if (botaoRelaPressionado(texto[1],texto[2])) {
@@ -54,6 +56,9 @@ bool DisplayNextion::recebeSerial(void) {
       } else {
         return false;
       }
+    } else if (VARIAVEL_INVALIDA == evento) {
+        telaMenu();
+        return false;
     } else {
       return false;
     }
@@ -67,8 +72,9 @@ void DisplayNextion::atualizaDisplay(uint8_t hora, uint8_t minuto, uint8_t segun
   if (confTelaInfo()) {
     DisplayNextion::info.atualizaTelaInfo(hora, minuto, segundo, porcentagem);
   } else if (confTelaRela()) {
-    //DisplayNextion::rela.atualizaTelaRela(hora, minuto, segundo, sensor);
+    DisplayNextion::rela.atualizaTelaRela(hora, minuto, segundo, sensor);
   }
+  delay(45);
 }
 
 void DisplayNextion::telaMenu(void) {
@@ -117,7 +123,7 @@ bool DisplayNextion::botaoRelaPressionado(uint8_t page_id, uint8_t comp_id) {
   if (page_id == MENU && comp_id == B_RELA) {
     telaRela();
     return true;
-  } else {
+  } else{
     return false;
   }
 }
