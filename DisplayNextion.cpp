@@ -84,6 +84,7 @@ void DisplayNextion::atualizaDisplay(uint8_t hora, uint8_t minuto, uint8_t segun
   } else if (confTelaRela()) {
     DisplayNextion::rela.atualizaTelaRela(hora, minuto, segundo, sensor);
   }
+  delay(45);
 }
 
 void DisplayNextion::telaMenu(void) {
