@@ -29,13 +29,13 @@ void TelaInfo::atualizaTelaInfo(uint8_t hora, uint8_t minuto, uint8_t segundo, i
 }
 
 void TelaInfo::atualizaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo) {
-  unsigned char tempo[10];
+  char tempo[10];
   sprintf(tempo, "%02d:%02d:%02d", hora, minuto, segundo);
   TelaInfo::txtTempo.setText(tempo);
 }
 
 void TelaInfo::atualizaVelocidade(int velocidade) {
-  unsigned char texto[10];
+  char texto[10];
   sprintf(texto, "%02d%%", velocidade);
   TelaInfo::txtPorc.setText(texto);
 }

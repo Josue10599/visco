@@ -39,8 +39,11 @@
       static NexText txtT4;
       uint8_t getPosicao(void);
       void setPosicao(uint8_t value);
+      bool getProximo(void);
+      void setProximo(bool value);
       void proximoTempo(void);
       void adicionaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t posicao);
+      bool tempoZero(uint8_t hora, uint8_t minuto, uint8_t segundo);
   };
 
 #endif //TELA_RELA_H

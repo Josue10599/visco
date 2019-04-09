@@ -30,7 +30,7 @@ Tempo::Tempo(int periodo) {
   zeraTempo();
 }
 
-static void Tempo::contaTempo() {
+void Tempo::contaTempo() {
   Tempo::segundo++;
   if (Tempo::segundo == 60) {
     Tempo::segundo = 0;
@@ -47,31 +47,31 @@ void Tempo::desativaTempo(){
   Timer1.detachInterrupt();
 }
 
-void Tempo::ativaTempo(){
+void Tempo::ativaTempo(void){
   Timer1.start();
   Timer1.attachInterrupt(contaTempo);
 }
 
-void Tempo::zeraTempo() {
+void Tempo::zeraTempo(void) {
   Tempo::hora = 0;
   Tempo::minuto = 0;
   Tempo::segundo = 0;
 }
 
-unsigned char Tempo::getTempo() {
-  unsigned char txt[10];
+char* Tempo::getTempo(void) {
+  char txt[10];
   sprintf(txt, "%02d:%02d:%02d", Tempo::hora, Tempo::minuto, Tempo::segundo);
   return txt;
 }
 
-int Tempo::getSegundo() {
+int Tempo::getSegundo(void) {
   return Tempo::segundo;
 }
 
-int Tempo::getMinuto() {
+int Tempo::getMinuto(void) {
   return Tempo::minuto;
 }
 
-int Tempo::getHora() {
+int Tempo::getHora(void) {
   return Tempo::hora;
 }

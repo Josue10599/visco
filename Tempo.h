@@ -21,7 +21,7 @@
       void zeraTempo();
       void desativaTempo();
       void ativaTempo();
-      unsigned char getTempo();
+      char* getTempo();
       int getSegundo();
       int getMinuto();
       int getHora();
@@ -29,7 +29,7 @@
       static uint8_t hora;
       static uint8_t minuto;
       static uint8_t segundo;
-      static void contaTempo();
+      static void contaTempo(void);
   };
   
 #endif // TEMPO_H

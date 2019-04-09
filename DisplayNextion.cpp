@@ -52,7 +52,7 @@ bool DisplayNextion::recebeSerial(void) {
       } else {
         return false;
       }
-    } else if (VARIAVEL_INVALIDA == evento) {
+    } else if (evento == VARIAVEL_INVALIDA) {
         telaMenu();
         return false;
     } else {
@@ -84,7 +84,6 @@ void DisplayNextion::atualizaDisplay(uint8_t hora, uint8_t minuto, uint8_t segun
   } else if (confTelaRela()) {
     DisplayNextion::rela.atualizaTelaRela(hora, minuto, segundo, sensor);
   }
-  delay(45);
 }
 
 void DisplayNextion::telaMenu(void) {
@@ -122,6 +121,7 @@ bool DisplayNextion::botaoHomePressionado(uint8_t page_id, uint8_t comp_id) {
 
 bool DisplayNextion::botaoLimpPressionado(uint8_t page_id, uint8_t comp_id){
   if (page_id == RELA && comp_id == LIMPAR) {
+    telaRela();
     DisplayNextion::rela.zeraRelatorios();
     return true;
   } else {
