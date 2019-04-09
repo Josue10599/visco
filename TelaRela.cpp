@@ -29,34 +29,33 @@ TelaRela::TelaRela() {
 void TelaRela::atualizaTelaRela(uint8_t hora, uint8_t minuto, uint8_t segundo, bool proximo) {
   if ((!proximo && getPosicao() < 4) || (proximo && getPosicao() >= 4)) {
     proximoTempo();
-    delay(10);
   }
   adicionaTempo(hora, minuto, segundo, getPosicao());
-  delay(10);
 }
 
 void TelaRela::adicionaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t posicao) {
     unsigned char tempo[10];
     sprintf(tempo, "%02d:%02d:%02d", hora, minuto, segundo);
-    delay(10);
     switch (posicao) {
       case 0: TelaRela::txtT1.setText(tempo);
+        delay(10);
         break;
       case 1: TelaRela::txtT2.setText(tempo);
+        delay(10);
         break;
       case 2: TelaRela::txtT3.setText(tempo);
+        delay(10);
         break;
       case 3: TelaRela::txtT4.setText(tempo);
+        delay(10);
         break;
       default:
         zeraRelatorios();
         break;
     }
-    delay(10);
 }
 
 void TelaRela::zeraRelatorios(void) {
-  setPosicao(0);
   unsigned char txt[] = "00:00:00";
   delay(10);
   TelaRela::txtT1.setText(txt);
@@ -67,6 +66,7 @@ void TelaRela::zeraRelatorios(void) {
   delay(10);
   TelaRela::txtT4.setText(txt);
   delay(10);
+  setPosicao(0);
 }
 
 uint8_t TelaRela::getPosicao(void) {

@@ -23,14 +23,16 @@
   #define TXTT3 4
   #define TXTT4 5
   #define HOME_R 1
-
+  #define LIMPAR 6
 
   class TelaRela {
     public:
       TelaRela(void); // Configura os componentes da tela
       void atualizaTelaRela(uint8_t hora, uint8_t minuto, uint8_t segundo, bool proximo);
+      void zeraRelatorios(void);
     private:
       static uint8_t posicao;
+      static bool proximo;
       static NexText txtT1;
       static NexText txtT2;
       static NexText txtT3;
@@ -39,7 +41,6 @@
       void setPosicao(uint8_t value);
       void proximoTempo(void);
       void adicionaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t posicao);
-      void zeraRelatorios(void);
   };
 
 #endif //TELA_RELA_H

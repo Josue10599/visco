@@ -41,15 +41,11 @@ bool DisplayNextion::recebeSerial(void) {
         }
         texto[i] = 0x00;
         if (texto[4] == COMANDO_FINALIZADO || texto[5] == COMANDO_FINALIZADO || texto[6] == COMANDO_FINALIZADO) {
-            if (botaoInfoPressionado(texto[1],texto[2])) {
-              return true;
-            } else if (botaoRelaPressionado(texto[1],texto[2])) {
-              return true;
-            } else if (botaoHomePressionado(texto[1],texto[2])) {
-              return true;
-            } else {
-              return false;
-            }
+          if (botaoPressionado(texto[1],texto[2])) {
+            return true;
+          } else {
+            return false;
+          }
         } else {
           return false;
         }
@@ -64,6 +60,20 @@ bool DisplayNextion::recebeSerial(void) {
     }
   } else {
    return false;
+  }
+}
+
+bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
+  if (botaoHomePressionado(page_id,comp_id)) {
+    return true;
+  } else if (botaoRelaPressionado(page_id,comp_id)) {
+    return true;
+  } else if (botaoInfoPressionado(page_id,comp_id)) {
+    return true;
+  } else if (botaoLimpPressionado(page_id,comp_id)) {
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -104,6 +114,15 @@ bool DisplayNextion::confTelaRela(void) {
 bool DisplayNextion::botaoHomePressionado(uint8_t page_id, uint8_t comp_id) {
   if ((page_id == INFO && comp_id == HOME_I) || (page_id == RELA && comp_id == HOME_R)) {
     telaMenu();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool DisplayNextion::botaoLimpPressionado(uint8_t page_id, uint8_t comp_id){
+  if (page_id == RELA && comp_id == LIMPAR) {
+    DisplayNextion::rela.zeraRelatorios();
     return true;
   } else {
     return false;
