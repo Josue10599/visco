@@ -11,11 +11,11 @@
 #ifndef DISPLAY_NEXTION_H
 #define DISPLAY_NEXTION_H
 
-#include <Arduino.h>
-#include <Nextion.h>
-#include "TelaRela.h"
-#include "TelaInfo.h"
-#include "TelaMenu.h"
+ #include <Arduino.h>
+ #include <Nextion.h>
+ #include "TelaRela.h"
+ #include "TelaInfo.h"
+ #include "TelaMenu.h"
 
 // Comandos do display enviado por eventos
 #define BOTAO_PRESSIONADO 0x65
