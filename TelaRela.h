@@ -28,7 +28,7 @@
   class TelaRela {
     public:
       TelaRela(void); // Configura os componentes da tela
-      void atualizaTelaRela(uint8_t hora, uint8_t minuto, uint8_t segundo, bool proximo);
+      void atualizaTelaRela(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, bool proximo);
       void zeraRelatorios(void);
     private:
       static uint8_t posicao;
@@ -42,8 +42,8 @@
       bool getProximo(void);
       void setProximo(bool value);
       void proximoTempo(void);
-      void adicionaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t posicao);
-      bool tempoZero(uint8_t hora, uint8_t minuto, uint8_t segundo);
+      void adicionaTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, uint8_t posicao);
+      bool tempoZero(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
   };
 
 #endif //TELA_RELA_H

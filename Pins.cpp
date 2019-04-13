@@ -139,7 +139,7 @@ bool Pins::leBotaoReset() {
 #ifdef POTENCIOMETRO
   int Pins::lePotenciometro() {
     uint16_t potenciometro = analogRead(potenciometro);
-    return map(potenciometro, 0, 1024, 0, 255);
+    return map(potenciometro, 0, 1023, 0, 255);
   }
 
   void Pins::ativaTriac(int potenciometro) {

@@ -26,15 +26,15 @@
   class TelaInfo {
     public:
       TelaInfo(void);
-      void atualizaTelaInfo(uint8_t hora, uint8_t minuto, uint8_t segundo, int porcentagem);
+      void atualizaTelaInfo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, int porcentagem);
     private:
       static NexText txtTempo;
       static NexText txtPorc;
       static NexProgressBar progVelocidade;
-      void atualizaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo);
+      void atualizaTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
       void atualizaVelocidade(int velocidade);
       void atualizaBarra(int porcentagem);
-      bool confTempo(uint8_t hora, uint8_t minuto, uint8_t segundo);
+      bool confTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
   };
 
 #endif //TELA_INFO_H

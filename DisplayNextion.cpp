@@ -77,12 +77,12 @@ bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
   }
 }
 
-void DisplayNextion::atualizaDisplay(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t porcentagem, bool sensor){
+void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, uint8_t porcentagem, bool sensor){
   recebeSerial();
   if (confTelaInfo()) {
-    DisplayNextion::info.atualizaTelaInfo(hora, minuto, segundo, porcentagem);
+    DisplayNextion::info.atualizaTelaInfo(minuto, segundo, miliSegundo, porcentagem);
   } else if (confTelaRela()) {
-    DisplayNextion::rela.atualizaTelaRela(hora, minuto, segundo, sensor);
+    DisplayNextion::rela.atualizaTelaRela(minuto, segundo, miliSegundo, sensor);
   }
   delay(45);
 }

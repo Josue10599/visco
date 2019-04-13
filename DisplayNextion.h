@@ -26,7 +26,7 @@ class DisplayNextion
 {
 public:
   DisplayNextion(void);
-  void atualizaDisplay(uint8_t hora, uint8_t minuto, uint8_t segundo, uint8_t porcentagem, bool sensor);
+  void atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, uint8_t porcentagem, bool sensor);
   void proximoTempo(void);
 private:
   static TelaRela rela;
@@ -43,11 +43,11 @@ private:
   bool confTelaMenu(void);
   bool confTelaInfo(void);
   bool confTelaRela(void);
-  bool confTempo(uint8_t hora, uint8_t minuto, uint8_t segundo);
+  bool confTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
   void telaMenu(void);
   void telaInfo(void);
   void telaRela(void);
-  void atualizaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo);
+  void atualizaTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
   void atualizaVelocidade(int porcentagem);
 };
 

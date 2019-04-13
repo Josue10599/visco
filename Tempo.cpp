@@ -10,17 +10,18 @@
  
 #include "Tempo.h"
 
-uint8_t Tempo::hora;
 uint8_t Tempo::minuto;
 uint8_t Tempo::segundo;
+uint8_t Tempo::miliSegundo;
 
 Tempo::Tempo() {
   Timer1.initialize();
+  Timer1.setPeriod(10000);
   Timer1.attachInterrupt(contaTempo);
   desativaTempo();
-  Tempo::hora = 0;
   Tempo::minuto = 0;
   Tempo::segundo = 0;
+  Tempo::miliSegundo = 0;
 }
 
 Tempo::Tempo(int periodo) {
@@ -31,14 +32,14 @@ Tempo::Tempo(int periodo) {
 }
 
 void Tempo::contaTempo() {
-  Tempo::segundo++;
+  Tempo::miliSegundo++;
+  if (Tempo::miliSegundo == 100) {
+    Tempo::miliSegundo = 0;
+    Tempo::segundo++;
+  }
   if (Tempo::segundo == 60) {
     Tempo::segundo = 0;
     Tempo::minuto++;
-  }
-  if (Tempo::minuto == 60) {
-    Tempo::minuto = 0;
-    Tempo::hora++;
   }
 }
 
@@ -53,15 +54,19 @@ void Tempo::ativaTempo(void){
 }
 
 void Tempo::zeraTempo(void) {
-  Tempo::hora = 0;
   Tempo::minuto = 0;
   Tempo::segundo = 0;
+  Tempo::miliSegundo = 0;
 }
 
 char* Tempo::getTempo(void) {
   char txt[10];
-  sprintf(txt, "%02d:%02d:%02d", Tempo::hora, Tempo::minuto, Tempo::segundo);
+  sprintf(txt, "%02d:%02d:%02d", Tempo::minuto, Tempo::segundo, Tempo::miliSegundo);
   return txt;
+}
+
+int Tempo::getMiliSegundo(void) {
+  return Tempo::miliSegundo;
 }
 
 int Tempo::getSegundo(void) {
@@ -70,8 +75,4 @@ int Tempo::getSegundo(void) {
 
 int Tempo::getMinuto(void) {
   return Tempo::minuto;
-}
-
-int Tempo::getHora(void) {
-  return Tempo::hora;
 }

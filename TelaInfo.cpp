@@ -20,17 +20,17 @@ TelaInfo::TelaInfo(void) {
   TelaInfo::progVelocidade = NexProgressBar(INFO, PROGVEL, "progVel");
 }
 
-void TelaInfo::atualizaTelaInfo(uint8_t hora, uint8_t minuto, uint8_t segundo, int porcentagem) {
-  if (confTempo(hora, minuto, segundo)) {
-    atualizaTempo(hora, minuto, segundo);
+void TelaInfo::atualizaTelaInfo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, int porcentagem) {
+  if (confTempo(minuto, segundo, miliSegundo)) {
+    atualizaTempo(minuto, segundo, miliSegundo);
   }
   atualizaBarra(porcentagem);
   atualizaVelocidade(porcentagem);
 }
 
-void TelaInfo::atualizaTempo(uint8_t hora, uint8_t minuto, uint8_t segundo) {
+void TelaInfo::atualizaTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo) {
   char tempo[10];
-  sprintf(tempo, "%02d:%02d:%02d", hora, minuto, segundo);
+  sprintf(tempo, "%02d:%02d:%02d", minuto, segundo, miliSegundo);
   TelaInfo::txtTempo.setText(tempo);
 }
 
@@ -44,6 +44,6 @@ void TelaInfo::atualizaBarra(int porcentagem) {
   TelaInfo::progVelocidade.setValue(porcentagem);
 }
 
-bool TelaInfo::confTempo(uint8_t hora, uint8_t minuto, uint8_t segundo) {
-  return (hora != 0 || minuto != 0 || segundo != 0);
+bool TelaInfo::confTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo) {
+  return (minuto != 0 || segundo != 0 || miliSegundo != 0);
 }

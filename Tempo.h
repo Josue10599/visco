@@ -22,13 +22,13 @@
       void desativaTempo();
       void ativaTempo();
       char* getTempo();
+      int getMiliSegundo();
       int getSegundo();
       int getMinuto();
-      int getHora();
     private:
-      static uint8_t hora;
       static uint8_t minuto;
       static uint8_t segundo;
+      static uint8_t miliSegundo;
       static void contaTempo(void);
   };
   
