@@ -20,6 +20,7 @@
       Visco();
       void processo();
     private:
+      bool inicia;
       Tempo tempo;
       Pins pins;
       DisplayNextion tela;

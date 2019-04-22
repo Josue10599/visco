@@ -53,7 +53,7 @@ bool DisplayNextion::recebeSerial(void) {
         return false;
       }
     } else if (evento == VARIAVEL_INVALIDA) {
-        telaMenu();
+        setPage(MENU);
         return false;
     } else {
       return false;
@@ -66,9 +66,9 @@ bool DisplayNextion::recebeSerial(void) {
 bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
   if (botaoHomePressionado(page_id,comp_id)) {
     return true;
-  } else if (botaoRelaPressionado(page_id,comp_id)) {
+  } else if (goToTelaRela(page_id,comp_id)) {
     return true;
-  } else if (botaoInfoPressionado(page_id,comp_id)) {
+  } else if (goToTelaInfo(page_id,comp_id)) {
     return true;
   } else if (botaoLimpPressionado(page_id,comp_id)) {
     return true;
@@ -87,20 +87,8 @@ void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t mi
   delay(45);
 }
 
-void DisplayNextion::telaMenu(void) {
-  DisplayNextion::tela = MENU;
-}
-
-void DisplayNextion::telaInfo(void) {
-  DisplayNextion::tela = INFO;
-}
-
-void DisplayNextion::telaRela(void) {
-  DisplayNextion::tela = RELA;
-}
-
-bool DisplayNextion::confTelaMenu(void) {
-  return (DisplayNextion::tela == MENU);
+void DisplayNextion::setPage(uint8_t page_id) {
+  DisplayNextion::tela=page_id;
 }
 
 bool DisplayNextion::confTelaInfo(void) {
@@ -111,9 +99,30 @@ bool DisplayNextion::confTelaRela(void) {
   return (DisplayNextion::tela == RELA);
 }
 
+bool DisplayNextion::botaoHelpPressionado(uint8_t page_id, uint8_t comp_id) {
+  if (page_id == INFO && comp_id == HELP_I) {
+    setPage(AJUDA_INFO);
+    return true;
+  } else if (page_id == RELA && comp_id == HELP_R) {
+    setPage(AJUDA_RELA);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool DisplayNextion::botaoConfigPressionado(uint8_t page_id, uint8_t comp_id) {
+  if (page_id == INFO && comp_id == B_CONFIG) {
+    setPage(TIME);
+    return true;
+  } else {
+    return false;
+  }
+}
+
 bool DisplayNextion::botaoHomePressionado(uint8_t page_id, uint8_t comp_id) {
   if ((page_id == INFO && comp_id == HOME_I) || (page_id == RELA && comp_id == HOME_R)) {
-    telaMenu();
+    setPage(MENU);
     return true;
   } else {
     return false;
@@ -122,7 +131,7 @@ bool DisplayNextion::botaoHomePressionado(uint8_t page_id, uint8_t comp_id) {
 
 bool DisplayNextion::botaoLimpPressionado(uint8_t page_id, uint8_t comp_id){
   if (page_id == RELA && comp_id == LIMPAR) {
-    telaRela();
+    setPage(RELA);
     DisplayNextion::rela.zeraRelatorios();
     return true;
   } else {
@@ -130,18 +139,18 @@ bool DisplayNextion::botaoLimpPressionado(uint8_t page_id, uint8_t comp_id){
   }
 }
 
-bool DisplayNextion::botaoInfoPressionado(uint8_t page_id, uint8_t comp_id) {
-  if (page_id == MENU && comp_id == B_INFO) {
-    telaInfo();
+bool DisplayNextion::goToTelaInfo(uint8_t page_id, uint8_t comp_id) {
+  if ((page_id == MENU && comp_id == B_INFO) || (page_id == AJUDA_INFO && comp_id == B_RETURN)) {
+    setPage(INFO);
     return true;
   } else {
     return false;
   }
 }
 
-bool DisplayNextion::botaoRelaPressionado(uint8_t page_id, uint8_t comp_id) {
-  if (page_id == MENU && comp_id == B_RELA) {
-    telaRela();
+bool DisplayNextion::goToTelaRela(uint8_t page_id, uint8_t comp_id) {
+  if ((page_id == MENU && comp_id == B_RELA) || (page_id == AJUDA_RELA && comp_id == B_RETURN)) {
+    setPage(RELA);
     return true;
   } else{
     return false;

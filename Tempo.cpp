@@ -36,10 +36,10 @@ void Tempo::contaTempo() {
   if (Tempo::miliSegundo == 100) {
     Tempo::miliSegundo = 0;
     Tempo::segundo++;
-  }
-  if (Tempo::segundo == 60) {
-    Tempo::segundo = 0;
-    Tempo::minuto++;
+    if (Tempo::segundo == 60) {
+      Tempo::segundo = 0;
+      Tempo::minuto++;
+    }
   }
 }
 

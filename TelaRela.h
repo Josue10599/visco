@@ -24,6 +24,7 @@
   #define TXTT4 5
   #define HOME_R 1
   #define LIMPAR 6
+  #define HELP_R 7
 
   class TelaRela {
     public:

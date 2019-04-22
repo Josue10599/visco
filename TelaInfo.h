@@ -22,6 +22,9 @@
   #define TXTTEMPO 4
   #define PROGVEL  2
   #define HOME_I   1
+  #define HELP_I   10
+  #define B_ON_OFF 8
+  #define B_CONFIG 7
 
   class TelaInfo {
     public:
