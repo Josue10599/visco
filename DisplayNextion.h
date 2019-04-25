@@ -28,14 +28,12 @@ class DisplayNextion
 {
 public:
   DisplayNextion(void);
-  void atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, uint8_t porcentagem, bool sensor);
-  void proximoTempo(void);
+  void atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, bool sensor);
+  uint8_t getPage(void);
 private:
   static TelaRela rela;
   static TelaInfo info;
-  static uint8_t tempos[3];
-  static uint8_t posicao;
-  static uint8_t tela;
+  static uint8_t page;
   bool recebeSerial(void);
   bool botaoPressionado(uint8_t page_id, uint8_t comp_id);
   bool botaoHelpPressionado(uint8_t page_id, uint8_t comp_id);
@@ -45,14 +43,7 @@ private:
   bool botaoLimpPressionado(uint8_t page_id, uint8_t comp_id);
   bool goToTelaInfo(uint8_t page_id, uint8_t comp_id);
   bool goToTelaRela(uint8_t page_id, uint8_t comp_id);
-  bool confTelaInfo(void);
-  bool confTelaRela(void);
-  bool confTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
   void setPage(uint8_t page_id);
-  void telaTempo(void);
-  void telaAjuda(void);
-  void atualizaTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo);
-  void atualizaVelocidade(int porcentagem);
 };
 
 #endif // DISPLAY_NEXTION_H

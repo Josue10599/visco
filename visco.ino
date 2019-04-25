@@ -3,7 +3,7 @@
  *  
  *  Autor: Josue Lopes
  *  
- *  Versão: 0.2
+ *  Versão: 0.3
  *  
  *  Função: Sistema de controle de viscocidade de líquidos.
  *  

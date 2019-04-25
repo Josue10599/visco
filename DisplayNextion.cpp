@@ -13,7 +13,7 @@
 TelaRela DisplayNextion::rela = TelaRela();
 TelaInfo DisplayNextion::info = TelaInfo();
 
-uint8_t DisplayNextion::tela;
+uint8_t DisplayNextion::page;
 
 DisplayNextion::DisplayNextion(void) {
   // Configura comunicação Serial do display
@@ -23,7 +23,7 @@ DisplayNextion::DisplayNextion(void) {
   // Configura componentes da tela Informações
   DisplayNextion::info = TelaInfo();
   // Atribui valores as variáveis de localização
-  DisplayNextion::tela = 0;
+  DisplayNextion::page = 0;
 }
 
 bool DisplayNextion::recebeSerial(void) {
@@ -77,26 +77,23 @@ bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
   }
 }
 
-void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, uint8_t porcentagem, bool sensor){
+void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, bool sensor) {
   recebeSerial();
-  if (confTelaInfo()) {
-    DisplayNextion::info.atualizaTelaInfo(minuto, segundo, miliSegundo, porcentagem);
-  } else if (confTelaRela()) {
-    DisplayNextion::rela.atualizaTelaRela(minuto, segundo, miliSegundo, sensor);
+  switch(getPage()) {
+    case INFO: DisplayNextion::info.atualizaTelaInfo();
+      break;
+    case RELA: DisplayNextion::rela.atualizaTelaRela(minuto, segundo, miliSegundo, sensor);
+      break;
   }
   delay(45);
 }
 
+uint8_t DisplayNextion::getPage(void) {
+  return DisplayNextion::page;
+}
+
 void DisplayNextion::setPage(uint8_t page_id) {
-  DisplayNextion::tela=page_id;
-}
-
-bool DisplayNextion::confTelaInfo(void) {
-  return (DisplayNextion::tela == INFO);
-}
-
-bool DisplayNextion::confTelaRela(void) {
-  return (DisplayNextion::tela == RELA);
+  DisplayNextion::page=page_id;
 }
 
 bool DisplayNextion::botaoHelpPressionado(uint8_t page_id, uint8_t comp_id) {

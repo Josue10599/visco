@@ -21,7 +21,7 @@ Visco::Visco() {
 void Visco::processo() {
   while(!inicia) {
     inicia = pins.leSensorBarreira();
-    tela.atualizaDisplay(tempo.getMinuto(), tempo.getSegundo(), tempo.getMiliSegundo(), valorPorcentagem(), inicia);
+    tela.atualizaDisplay(tempo.getMinuto(), tempo.getSegundo(), tempo.getMiliSegundo(), inicia);
   }
   if(inicia) {
     if (tempo.getMiliSegundo() == 0) {
@@ -34,11 +34,5 @@ void Visco::processo() {
     tempo.zeraTempo();
     pins.oscilaBuzzer(2000,1000); 
   }
-  tela.atualizaDisplay(tempo.getMinuto(), tempo.getSegundo(), tempo.getMiliSegundo(), valorPorcentagem(), inicia);
-}
-
-int Visco::valorPorcentagem() {
-  int potenciometro = pins.lePotenciometro();
-  pins.ativaTriac(potenciometro);
-  return pins.porcentagem(potenciometro);
+  tela.atualizaDisplay(tempo.getMinuto(), tempo.getSegundo(), tempo.getMiliSegundo(), inicia);
 }
