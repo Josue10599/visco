@@ -53,7 +53,6 @@ bool DisplayNextion::recebeSerial(void) {
         return false;
       }
     } else if (evento == VARIAVEL_INVALIDA) {
-        setPage(MENU);
         return false;
     } else {
       return false;
@@ -64,16 +63,33 @@ bool DisplayNextion::recebeSerial(void) {
 }
 
 bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
-  if (botaoHomePressionado(page_id,comp_id)) {
-    return true;
-  } else if (goToTelaRela(page_id,comp_id)) {
-    return true;
-  } else if (goToTelaInfo(page_id,comp_id)) {
-    return true;
-  } else if (botaoLimpPressionado(page_id,comp_id)) {
-    return true;
-  } else {
-    return false;
+  switch (page) {
+    case INFO:
+      if (botaoOnOffPressionado(page_id, comp_id)) return true;
+      if (botaoHomePressionado(page_id, comp_id)) return true;
+      if (botaoHelpPressionado(page_id, comp_id)) return true;
+      if (botaoConfigPressionado(page_id, comp_id)) return true;
+      break;
+    case RELA:
+      if (botaoHomePressionado(page_id, comp_id)) return true;
+      if (botaoHelpPressionado(page_id, comp_id)) return true;
+      if (botaoLimpPressionado(page_id, comp_id)) return true;
+      break;
+    case MENU:
+      if (goToTelaInfo(page_id, comp_id)) return true;
+      if (goToTelaRela(page_id, comp_id)) return true;
+      break;
+    case TIME:
+      if (goToTelaInfo(page_id, comp_id)) return true;
+      break;
+    case AJUDA_INFO:
+      if (goToTelaInfo(page_id, comp_id)) return true;
+      break;
+    case AJUDA_RELA:
+      if (goToTelaRela(page_id, comp_id)) return true;
+      break;
+    default:
+      return false;
   }
 }
 
@@ -85,7 +101,7 @@ void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t mi
     case RELA: DisplayNextion::rela.atualizaTelaRela(minuto, segundo, miliSegundo, sensor);
       break;
   }
-  delay(45);
+  delay(10);
 }
 
 uint8_t DisplayNextion::getPage(void) {
@@ -136,8 +152,18 @@ bool DisplayNextion::botaoLimpPressionado(uint8_t page_id, uint8_t comp_id){
   }
 }
 
+bool DisplayNextion::botaoOnOffPressionado(uint8_t page_id, uint8_t comp_id) {
+  if (page_id == INFO && comp_id == B_ON_OFF) {
+    DisplayNextion::info.onOffBatedeira();   
+    return true;
+  } else {
+    return false;
+  }
+}
+
 bool DisplayNextion::goToTelaInfo(uint8_t page_id, uint8_t comp_id) {
-  if ((page_id == MENU && comp_id == B_INFO) || (page_id == AJUDA_INFO && comp_id == B_RETURN)) {
+  if ((page_id == MENU && comp_id == B_INFO) || (page_id == AJUDA_INFO && comp_id == B_RETURN) || 
+  (page_id == TIME && comp_id == B_CANCELAR) || (page_id == TIME && comp_id == B_CONFIRMAR)) {
     setPage(INFO);
     return true;
   } else {

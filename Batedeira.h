@@ -14,13 +14,12 @@
 #include "Arduino.h"
 #include "Pins.h"
 
-class Batedeira {
+class Batedeira : public Pins{
     public:
         Batedeira();
         void processoBatedeira(bool estado);
         uint8_t getPorcentagem(void);
     private:
-        static Pins pins;
         void setVelocidade(uint8_t velocidade);
         uint8_t getVelocidade(void);
 };

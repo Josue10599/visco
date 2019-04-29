@@ -15,18 +15,32 @@ NexText TelaInfo::txtPorc = NexText(INFO, TXTPORC, "txtPorc");
 NexProgressBar TelaInfo::progVelocidade = NexProgressBar(INFO, PROGVEL, "progVel");
 
 bool TelaInfo::botaoOnOff;
+uint16_t TelaInfo::atualiza;
 
 TelaInfo::TelaInfo(void) {
   TelaInfo::txtPorc = NexText(INFO, TXTPORC, "txtPorc");
   TelaInfo::progVelocidade = NexProgressBar(INFO, PROGVEL, "progVel");
   TelaInfo::botaoOnOff = false;
+  TelaInfo::atualiza = 0;
+}
+
+void TelaInfo::onOffBatedeira(void) {
+  if (TelaInfo::botaoOnOff){
+    TelaInfo::botaoOnOff = false;
+  } else {
+    TelaInfo::botaoOnOff = true;
+  }
 }
 
 void TelaInfo::atualizaTelaInfo(void) {
   batedeira.processoBatedeira(TelaInfo::botaoOnOff);
-  atualizaBarra(batedeira.getPorcentagem());
-  atualizaPorcentagem(batedeira.getPorcentagem());
-  delay(100);
+  if (atualiza == 10) {
+    atualizaBarra(batedeira.getPorcentagem());
+    atualizaPorcentagem(batedeira.getPorcentagem());
+    atualiza = 0;
+  } else {
+    atualiza +=1;
+  }
 }
 
 void TelaInfo::atualizaPorcentagem(int velocidade) {

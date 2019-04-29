@@ -9,10 +9,8 @@
 
 #include "Batedeira.h"
 
-Pins Batedeira::pins = Pins();
-
-Batedeira::Batedeira() {
-    Batedeira::pins = Pins();
+Batedeira::Batedeira(void) {
+    processoBatedeira(false);
 }
 
 void Batedeira::processoBatedeira(bool estado) {
@@ -24,13 +22,13 @@ void Batedeira::processoBatedeira(bool estado) {
 }
 
 void Batedeira::setVelocidade(uint8_t velocidade) {
-    Batedeira::pins.ativaTriac(velocidade);
+    ativaTriac(velocidade);
 }
 
 uint8_t Batedeira::getVelocidade(void) {
-    return Batedeira::pins.lePotenciometro();
+    return lePotenciometro();
 }
 
 uint8_t Batedeira::getPorcentagem(void) {
-    return Batedeira::pins.porcentagem(getVelocidade());
+    return porcentagem(getVelocidade());
 }

@@ -30,11 +30,11 @@
     public:
       TelaInfo(void);
       void atualizaTelaInfo(void);
-      void setOnOff(bool estado);
+      void onOffBatedeira(void);
     private:
       static bool botaoOnOff;
+      static uint16_t atualiza;
       static Batedeira batedeira;
-      static NexText txtTempo;
       static NexText txtPorc;
       static NexProgressBar progVelocidade;
       void atualizaPorcentagem(int velocidade);
