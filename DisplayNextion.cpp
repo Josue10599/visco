@@ -29,18 +29,17 @@ DisplayNextion::DisplayNextion(void) {
 bool DisplayNextion::recebeSerial(void) {
   static uint8_t texto[10];
   if (nexSerial.available() > 0) {
+    delay(10);
     uint8_t evento = nexSerial.read();
     if (evento == BOTAO_PRESSIONADO) {
       if (nexSerial.available() >= 6) {
-        delay(10);
         texto[0] = evento;
         uint8_t i;
         for (i = 1; i < 7; i++) {
-          delay(10);
           texto[i] = nexSerial.read();
         }
         texto[i] = 0x00;
-        if (texto[4] == COMANDO_FINALIZADO || texto[5] == COMANDO_FINALIZADO || texto[6] == COMANDO_FINALIZADO) {
+        if (texto[4] == COMANDO_FINALIZADO && texto[5] == COMANDO_FINALIZADO && texto[6] == COMANDO_FINALIZADO) {
           if (botaoPressionado(texto[1],texto[2])) {
             return true;
           } else {
@@ -64,32 +63,24 @@ bool DisplayNextion::recebeSerial(void) {
 
 bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
   switch (page) {
+    case MENU:
+      if (goToTelaInfo(page_id, comp_id)) return true;
+      if (goToTelaRela(page_id, comp_id)) return true;
     case INFO:
       if (botaoOnOffPressionado(page_id, comp_id)) return true;
       if (botaoHomePressionado(page_id, comp_id)) return true;
       if (botaoHelpPressionado(page_id, comp_id)) return true;
       if (botaoConfigPressionado(page_id, comp_id)) return true;
-      break;
     case RELA:
       if (botaoHomePressionado(page_id, comp_id)) return true;
       if (botaoHelpPressionado(page_id, comp_id)) return true;
       if (botaoLimpPressionado(page_id, comp_id)) return true;
-      break;
-    case MENU:
-      if (goToTelaInfo(page_id, comp_id)) return true;
-      if (goToTelaRela(page_id, comp_id)) return true;
-      break;
     case TIME:
       if (goToTelaInfo(page_id, comp_id)) return true;
-      break;
     case AJUDA_INFO:
       if (goToTelaInfo(page_id, comp_id)) return true;
-      break;
     case AJUDA_RELA:
       if (goToTelaRela(page_id, comp_id)) return true;
-      break;
-    default:
-      return false;
   }
 }
 
@@ -101,7 +92,6 @@ void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t mi
     case RELA: DisplayNextion::rela.atualizaTelaRela(minuto, segundo, miliSegundo, sensor);
       break;
   }
-  delay(10);
 }
 
 uint8_t DisplayNextion::getPage(void) {
@@ -154,6 +144,7 @@ bool DisplayNextion::botaoLimpPressionado(uint8_t page_id, uint8_t comp_id){
 
 bool DisplayNextion::botaoOnOffPressionado(uint8_t page_id, uint8_t comp_id) {
   if (page_id == INFO && comp_id == B_ON_OFF) {
+    setPage(INFO); 
     DisplayNextion::info.onOffBatedeira();   
     return true;
   } else {

@@ -13,6 +13,7 @@
 
   #include <Arduino.h>
   #include <Nextion.h>
+  #include <NexDualStateButton.h>
   #include "Batedeira.h"
 
   // Id da página
@@ -33,7 +34,9 @@
       void onOffBatedeira(void);
     private:
       static bool botaoOnOff;
-      static uint16_t atualiza;
+      static NexDSButton onOff;
+      static uint8_t atualizaTela;
+      static uint16_t velocidade;
       static Batedeira batedeira;
       static NexText txtPorc;
       static NexProgressBar progVelocidade;
