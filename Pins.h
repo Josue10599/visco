@@ -27,29 +27,30 @@
    */
 
 //  *** Sensores e Entradas de Sinal *** 
-  #define sensorNivel 4     // Pino do Arduíno que recebe o sinal do Sensor de Nível de Líquido
-  #define sensorBarreira 7  // Pino do Arduíno que recebe o sinal do Sensor de Barreira  
-  #define botaoReset 12     // Pino do Arduíno que recebe o sinal do Botão Reset
+  #define SENSOR_NIVEL 4     // Pino do Arduíno que recebe o sinal do Sensor de Nível de Líquido
+  #define SENSOR_BARREIRA 7  // Pino do Arduíno que recebe o sinal do Sensor de Barreira  
+  //#define BOTAO_RESET 12     // Pino do Arduíno que recebe o sinal do Botão Reset
 
   //Configurar resistor de Pull UP para inverter o sentido do sinal
-  #define SENSORNIVELPULLUP
-  #define SENSORBARREIRAPULLUP
-  //#define BOTAORESETPULLUP  
+  #define SENSOR_NIVEL_PULLUP
+  #define SENSOR_BARREIRA_PULLUP
+  #define BUZZER_PULLUP
+  //#define BOTAO_RESET_PULLUP  
 
-  #define POTENCIOMETRO
-  #ifdef POTENCIOMETRO
-    #define potenciometro A0  // Pino do Arduíno que recebe o sinal do Potênciometro
-    #define triac 3           // Pino do Arduíno que envia sinal para a comutação do Triac
-  #endif // POTENCIOMETRO
+  #define CONTROLE_PWM
+  #ifdef CONTROLE_PWM
+    #define POTENCIOMETRO A0  // Pino do Arduíno que recebe o sinal do Potênciometro
+    #define PWM 3           // Pino do Arduíno que envia sinal para a comutação do Batedeira
+  #endif // CONTROLE_PWM
 
 //  *** Atuadores e Saídas de Sinal *** 
-  #define buzzer 8          // Pino do Arduíno que envia sinal para acionar o Buzzer
+  #define BUZZER 8          // Pino do Arduíno que envia sinal para acionar o Buzzer
 
-  //#define RGB
+  #define RGB
   #ifdef RGB
-    #define ledR 5  // Pino do Arduíno que envia o sinal para a cor VERMELHA do led RGB
-    #define ledG 6 // Pino do Arduíno que envia o sinal para a cor VERDE do led RGB
-    #define ledB 11 // Pino do Arduíno que envia o sinal para a cor AZUL do led RGB
+    #define LED_RED 9  // Pino do Arduíno que envia o sinal para a cor VERMELHA do led RGB
+    #define LED_GREEN 10 // Pino do Arduíno que envia o sinal para a cor VERDE do led RGB
+    #define LED_BLUE 11 // Pino do Arduíno que envia o sinal para a cor AZUL do led RGB
   #endif // RGB
 
   class Pins {
@@ -57,15 +58,15 @@
       Pins();
       void ativaBuzzer();
       void desativaBuzzer();
-      void temporizaBuzzer(uint8_t);
-      void oscilaBuzzer(uint8_t, uint8_t, uint8_t);
-      void oscilaBuzzer(uint8_t, uint8_t);
+      void temporizaBuzzer(uint8_t ms_tempo);
+      void oscilaBuzzer(uint8_t tempoLigado, uint8_t tempoDesligado, uint8_t numeroDePulsos);
+      
       bool leSensorNivel();
       bool leSensorBarreira();
       bool leBotaoReset();
       
       #ifdef RGB
-        void ativaRGB(uint8_t, uint8_t, uint8_t);
+        void ativaRGB(unsigned char vermelho, unsigned char verde, unsigned char azul);
         void ativaVermelho();
         void desativaVermelho();
         void ativaVerde();
@@ -74,11 +75,11 @@
         void desativaAzul();
       #endif // RGB
       
-      #ifdef POTENCIOMETRO
+      #ifdef CONTROLE_PWM
         int lePotenciometro();
-        void ativaTriac(int);
-        int porcentagem(int);
-      #endif // POTENCIOMETRO
+        void ativaPwm(int potenciometro);
+        int porcentagem(int potenciometro);
+      #endif // CONTROLE_PWM
       
   };
   

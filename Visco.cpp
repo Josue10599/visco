@@ -15,6 +15,7 @@ Visco::Visco() {
   pins = Pins();
   tempo = Tempo();
   tela = DisplayNextion();
+  pins.ativaVermelho();
   inicia = false;
 }
 
@@ -26,13 +27,15 @@ void Visco::processo() {
   if(inicia) {
     if (tempo.getMiliSegundo() == 0) {
       tempo.ativaTempo();
+      pins.ativaRGB(0,0,255);
     }
     inicia = !pins.leSensorNivel();
   }
   if(!inicia) {
     tempo.desativaTempo();
     tempo.zeraTempo();
-    pins.oscilaBuzzer(2000,1000); 
+    pins.ativaRGB(255,0,0);
+    pins.temporizaBuzzer(250);
   }
   tela.atualizaDisplay(tempo.getMinuto(), tempo.getSegundo(), tempo.getMiliSegundo(), inicia);
 }

@@ -10,50 +10,70 @@
 #include "Pins.h"
 
 Pins::Pins() {
-  #ifdef SENSORNIVELPULLUP
-    pinMode(sensorNivel, INPUT_PULLUP);
+#ifdef SENSOR_NIVEL
+  #ifdef SENSOR_NIVEL_PULLUP
+    pinMode(SENSOR_NIVEL, INPUT_PULLUP);
   #else
-    pinMode(sensorNivel,INPUT);
-  #endif // SENSORNIVELPULLUP
-  
-  #ifdef SENSORBARREIRAPULLUP
-    pinMode(sensorBarreira, INPUT_PULLUP);
-  #else
-    pinMode(sensorBarreira, INPUT);
-  #endif // SENSORBARREIRAPULLUP
+    pinMode(SENSOR_NIVEL,INPUT);
+  #endif // SENSOR_NIVEL_PULLUP
+#endif // SENSOR_NIVEL
 
-  #ifdef BOTAORESETPULLUP
-    pinMode(botaoReset, INPUT_PULLUP);
+#ifdef SENSOR_BARREIRA
+  #ifdef SENSOR_BARREIRA_PULLUP
+    pinMode(SENSOR_BARREIRA, INPUT_PULLUP);
   #else
-    pinMode(botaoReset, INPUT);
-  #endif // BOTAORESETPULLUP
-  
-  pinMode(buzzer, OUTPUT);
+    pinMode(SENSOR_BARREIRA, INPUT);
+  #endif // SENSOR_BARREIRA_PULLUP
+#endif // SENSOR_BARREIRA
+
+#ifdef BOTAO_RESET
+  #ifdef BOTAO_RESET_PULLUP
+    pinMode(BOTAO_RESET, INPUT_PULLUP);
+  #else
+    pinMode(BOTAO_RESET, INPUT);
+  #endif // BOTAO_RESET_PULLUP
+#endif //BOTAO_RESET
+
+#ifdef BUZZER
+  pinMode(BUZZER, OUTPUT);
+  desativaBuzzer();
+#endif // BUZZER
 
   #ifdef RGB
-    pinMode(ledR, OUTPUT);
-    pinMode(ledG, OUTPUT);
-    pinMode(ledB, OUTPUT);
+    pinMode(LED_RED, OUTPUT);
+    pinMode(LED_GREEN, OUTPUT);
+    pinMode(LED_BLUE, OUTPUT);
+    desativaVermelho();
+    desativaVerde();
+    desativaAzul();
   #endif // RGB
 
-  #ifdef POTENCIOMETRO
-    pinMode(potenciometro, INPUT);
-    pinMode(triac, OUTPUT);
-  #endif // POTENCIOMETRO
+  #ifdef CONTROLE_PWM
+    pinMode(POTENCIOMETRO, INPUT);
+    pinMode(PWM, OUTPUT);
+  #endif // CONTROLE_PWM
 }
 
 void Pins::ativaBuzzer() {
-  digitalWrite(buzzer, HIGH);
+  #ifndef BUZZER_PULLUP
+  digitalWrite(BUZZER, HIGH);
+  #else
+  digitalWrite(BUZZER, LOW);
+  #endif // BUZZER_PULLUP
 }
 
 void Pins::desativaBuzzer() {
-  digitalWrite(buzzer, LOW);
+  #ifndef BUZZER_PULLUP
+  digitalWrite(BUZZER, LOW);
+  #else
+  digitalWrite(BUZZER, HIGH);
+  #endif // BUZZER_PULLUP
 }
 
 void Pins::temporizaBuzzer(uint8_t ms_tempo) {
-  digitalWrite(buzzer, HIGH);
+  ativaBuzzer();
   delay(ms_tempo);
-  digitalWrite(buzzer, LOW);
+  desativaBuzzer();
 }
 
 void Pins::oscilaBuzzer(uint8_t tempoLigado, uint8_t tempoDesligado, uint8_t numeroDePulsos) {
@@ -61,92 +81,83 @@ void Pins::oscilaBuzzer(uint8_t tempoLigado, uint8_t tempoDesligado, uint8_t num
   if (numeroDePulsos > 0)
     vezes = numeroDePulsos;
   while (vezes > 0) {
-    digitalWrite(buzzer, HIGH);
+    ativaBuzzer();
     delay(tempoLigado);
-    digitalWrite(buzzer, LOW);
-    delay(tempoDesligado);
-    vezes--;
-  }
-}
-
-void Pins::oscilaBuzzer(uint8_t tempoLigado, uint8_t tempoDesligado) {
-  uint8_t vezes = 6;
-  while (vezes > 0) {
-    digitalWrite(buzzer, HIGH);
-    delay(tempoLigado);
-    digitalWrite(buzzer, LOW);
+    desativaBuzzer();
     delay(tempoDesligado);
     vezes--;
   }
 }
 
 bool Pins::leSensorNivel(){
-  #ifdef SENSORNIVELPULLUP
-    return !digitalRead(sensorNivel);
+  #ifdef SENSOR_NIVEL_PULLUP
+    return !digitalRead(SENSOR_NIVEL);
   #else
-    return digitalRead(sensorNivel);
-  #endif // SENSORNIVELPULLUP
+    return digitalRead(SENSOR_NIVEL);
+  #endif // SENSOR_NIVEL_PULLUP
 }
 
 bool Pins::leSensorBarreira() {
-  #ifdef SENSORBARREIRAPULLUP
-    return !digitalRead(sensorBarreira);
+  #ifdef SENSOR_BARREIRA_PULLUP
+    return !digitalRead(SENSOR_BARREIRA);
   #else
-    return digitalRead(sensorBarreira);
-  #endif // SENSORBARREIRAPULLUP
+    return digitalRead(SENSOR_BARREIRA);
+  #endif // SENSOR_BARREIRA_PULLUP
 }
 
+#ifdef BOTAO_RESET
 bool Pins::leBotaoReset() {
-  #ifdef BOTAORESETPULLUP
-    return !digitalRead(botaoReset);
+  #ifdef BOTAO_RESET_PULLUP
+    return !digitalRead(BOTAO_RESET);
   #else
-    return digitalRead(botaoReset);
-  #endif // BOTAORESETPULLUP
+    return digitalRead(BOTAO_RESET);
+  #endif // BOTAO_RESET_PULLUP
 }
+#endif
 
 #ifdef RGB
-  void Pins::ativaRGB(uint8_t vermelho, uint8_t verde, uint8_t azul) {
-    analogWrite(ledR, vermelho);
-    analogWrite(ledG, verde);
-    analogWrite(ledB, azul);
+  void Pins::ativaRGB(unsigned char vermelho, unsigned char verde, unsigned char azul) {
+    analogWrite(LED_RED, vermelho);
+    analogWrite(LED_GREEN, verde);
+    analogWrite(LED_BLUE, azul);
   }
 
   void Pins::ativaVermelho() {
-    digitalWrite(ledR, HIGH);
+    digitalWrite(LED_RED, HIGH);
   }
 
   void Pins::desativaVermelho() {
-    digitalWrite(ledR, LOW);
+    digitalWrite(LED_RED, LOW);
   }
 
   void Pins::ativaVerde() { 
-    digitalWrite(ledG, HIGH);
+    digitalWrite(LED_GREEN, HIGH);
   }
 
   void Pins::desativaVerde() { 
-    digitalWrite(ledG, LOW);
+    digitalWrite(LED_GREEN, LOW);
   }
 
   void Pins::ativaAzul() {
-    digitalWrite(ledB, HIGH);
+    digitalWrite(LED_BLUE, HIGH);
   }
 
   void Pins::desativaAzul() {
-    digitalWrite(ledB, LOW);
+    digitalWrite(LED_BLUE, LOW);
   }
 #endif // RGB
 
-#ifdef POTENCIOMETRO
+#ifdef CONTROLE_PWM
   int Pins::lePotenciometro() {
-    uint16_t potenciometro = analogRead(potenciometro);
+    uint16_t potenciometro = analogRead(POTENCIOMETRO);
     return map(potenciometro, 0, 1023, 0, 255);
   }
 
-  void Pins::ativaTriac(int potenciometro) {
-    analogWrite(triac, potenciometro);
+  void Pins::ativaPwm(int potenciometro) {
+    analogWrite(PWM, potenciometro);
   }
 
   int Pins::porcentagem(int potenciometro) {
     return map(potenciometro, 0, 255, 0, 100);
   }
-#endif // POTENCIOMETRO
+#endif // CONTROLE_PWM
