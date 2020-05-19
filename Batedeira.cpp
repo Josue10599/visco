@@ -16,10 +16,12 @@ Batedeira::Batedeira(void) {
 void Batedeira::processoBatedeira(bool estado) {
     if (estado) {
         setVelocidade(getVelocidade());
-        ativaRGB(0,255,0);
+        desativaVermelho();
+        ativaVerde();
     } else {
         setVelocidade(0);
-        ativaRGB(255,0,0);
+        desativaVerde();
+        ativaVermelho();
     }
 }
 

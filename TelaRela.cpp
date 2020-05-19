@@ -27,7 +27,7 @@ TelaRela::TelaRela() {
   setPosicao(0);
 }
 
-void TelaRela::atualizaTelaRela(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, bool proximo) {
+void TelaRela::atualizaTelaRela(uint8_t minuto, uint8_t segundo, uint32_t miliSegundo, bool proximo) {
   if (!tempoZero(minuto, segundo, miliSegundo)) {
     adicionaTempo(minuto, segundo, miliSegundo, getPosicao());
     setProximo(true);
@@ -39,9 +39,9 @@ void TelaRela::atualizaTelaRela(uint8_t minuto, uint8_t segundo, uint8_t miliSeg
   }
 }
 
-void TelaRela::adicionaTempo(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, uint8_t posicao) {
+void TelaRela::adicionaTempo(uint8_t minuto, uint8_t segundo, uint32_t miliSegundo, uint8_t posicao) {
     char tempo[10];
-    sprintf(tempo, "%02d:%02d:%02d", minuto, segundo, miliSegundo);
+    sprintf(tempo, "%02d:%02d:%01d", minuto, segundo, miliSegundo);
     switch (posicao) {
       case 0: TelaRela::txtT1.setText(tempo);
         break;
@@ -87,6 +87,6 @@ void TelaRela::proximoTempo(void) {
   TelaRela::posicao += 1;
 }
 
-bool TelaRela::tempoZero(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo) {
+bool TelaRela::tempoZero(uint8_t minuto, uint8_t segundo, uint32_t miliSegundo) {
   return minuto == 0 && segundo == 0 && miliSegundo == 0;
 }

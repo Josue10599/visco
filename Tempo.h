@@ -28,7 +28,7 @@
     private:
       static uint8_t minuto;
       static uint8_t segundo;
-      static uint8_t miliSegundo;
+      static uint32_t miliSegundo;
       static void contaTempo(void);
   };
   

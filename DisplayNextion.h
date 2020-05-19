@@ -28,7 +28,7 @@ class DisplayNextion
 {
 public:
   DisplayNextion(void);
-  void atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, bool sensor);
+  void atualizaDisplay(uint8_t minuto, uint8_t segundo, uint32_t miliSegundo, bool sensor);
   uint8_t getPage(void);
 private:
   static TelaRela rela;
@@ -41,6 +41,7 @@ private:
   bool botaoOnOffPressionado(uint8_t page_id, uint8_t comp_id);
   bool botaoHomePressionado(uint8_t page_id, uint8_t comp_id);
   bool botaoLimpPressionado(uint8_t page_id, uint8_t comp_id);
+  void nextPage(void);
   bool goToTelaInfo(uint8_t page_id, uint8_t comp_id);
   bool goToTelaRela(uint8_t page_id, uint8_t comp_id);
   void setPage(uint8_t page_id);

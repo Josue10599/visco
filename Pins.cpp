@@ -158,6 +158,6 @@ bool Pins::leBotaoReset() {
   }
 
   int Pins::porcentagem(int potenciometro) {
-    return map(potenciometro, 0, 255, 0, 100);
+    return map(potenciometro, 0, 254, 0, 100);
   }
 #endif // CONTROLE_PWM

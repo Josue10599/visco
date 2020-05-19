@@ -19,8 +19,8 @@ class Batedeira : public Pins{
         Batedeira();
         void processoBatedeira(bool estado);
         uint8_t getPorcentagem(void);
-    private:
         void setVelocidade(uint8_t velocidade);
+    private:
         uint8_t getVelocidade(void);
 };
 

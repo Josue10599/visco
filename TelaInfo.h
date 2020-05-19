@@ -32,6 +32,7 @@
       TelaInfo(void);
       void atualizaTelaInfo(void);
       void onOffBatedeira(void);
+      void desligaPWM(void);
     private:
       static bool botaoOnOff;
       static NexDSButton onOff;

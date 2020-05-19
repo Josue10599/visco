@@ -52,7 +52,8 @@ bool DisplayNextion::recebeSerial(void) {
         return false;
       }
     } else if (evento == VARIAVEL_INVALIDA) {
-        return false;
+      nextPage();
+      return false;
     } else {
       return false;
     }
@@ -84,18 +85,25 @@ bool DisplayNextion::botaoPressionado(uint8_t page_id, uint8_t comp_id) {
   }
 }
 
-void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint8_t miliSegundo, bool sensor) {
+void DisplayNextion::atualizaDisplay(uint8_t minuto, uint8_t segundo, uint32_t miliSegundo, bool sensor) {
   recebeSerial();
   switch(getPage()) {
     case INFO: DisplayNextion::info.atualizaTelaInfo();
       break;
     case RELA: DisplayNextion::rela.atualizaTelaRela(minuto, segundo, miliSegundo, sensor);
       break;
+    case MENU: DisplayNextion::info.desligaPWM();
+      break;
   }
 }
 
 uint8_t DisplayNextion::getPage(void) {
   return DisplayNextion::page;
+}
+
+void DisplayNextion::nextPage(void) {
+  DisplayNextion::page++;
+  if (DisplayNextion::page > RELA) setPage(MENU);
 }
 
 void DisplayNextion::setPage(uint8_t page_id) {

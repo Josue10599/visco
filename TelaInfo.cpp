@@ -46,7 +46,7 @@ void TelaInfo::atualizaTelaInfo(void) {
   } else {
     atualizaTela += 1;
   }
-  if (velocidade != batedeira.getPorcentagem()) {
+  if (velocidade != batedeira.getPorcentagem() && atualizaTela == 15) {
     atualizaBarra(batedeira.getPorcentagem());
     atualizaPorcentagem(batedeira.getPorcentagem());
     velocidade = batedeira.getPorcentagem();
@@ -61,4 +61,8 @@ void TelaInfo::atualizaPorcentagem(int velocidade) {
 
 void TelaInfo::atualizaBarra(int porcentagem) {
   TelaInfo::progVelocidade.setValue(porcentagem);
+}
+
+void TelaInfo::desligaPWM(void) {
+  batedeira.setVelocidade(0);
 }

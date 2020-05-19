@@ -12,11 +12,11 @@
 
 uint8_t Tempo::minuto;
 uint8_t Tempo::segundo;
-uint8_t Tempo::miliSegundo;
+uint32_t Tempo::miliSegundo;
 
 Tempo::Tempo() {
   Timer1.initialize();
-  Timer1.setPeriod(10000);
+  Timer1.setPeriod(100000);
   Timer1.attachInterrupt(contaTempo);
   desativaTempo();
   Tempo::minuto = 0;
@@ -33,9 +33,9 @@ Tempo::Tempo(int periodo) {
 
 void Tempo::contaTempo() {
   Tempo::miliSegundo++;
-  if (Tempo::miliSegundo == 100) {
-    Tempo::miliSegundo = 0;
+  if (Tempo::miliSegundo == 10) {
     Tempo::segundo++;
+    Tempo::miliSegundo = 0;
     if (Tempo::segundo == 60) {
       Tempo::segundo = 0;
       Tempo::minuto++;

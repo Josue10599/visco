@@ -32,7 +32,7 @@
   //#define BOTAO_RESET 12     // Pino do Arduíno que recebe o sinal do Botão Reset
 
   //Configurar resistor de Pull UP para inverter o sentido do sinal
-  #define SENSOR_NIVEL_PULLUP
+  //#define SENSOR_NIVEL_PULLUP
   #define SENSOR_BARREIRA_PULLUP
   #define BUZZER_PULLUP
   //#define BOTAO_RESET_PULLUP  
@@ -48,8 +48,8 @@
 
   #define RGB
   #ifdef RGB
-    #define LED_RED 9  // Pino do Arduíno que envia o sinal para a cor VERMELHA do led RGB
-    #define LED_GREEN 10 // Pino do Arduíno que envia o sinal para a cor VERDE do led RGB
+    #define LED_RED 5  // Pino do Arduíno que envia o sinal para a cor VERMELHA do led RGB
+    #define LED_GREEN 6 // Pino do Arduíno que envia o sinal para a cor VERDE do led RGB
     #define LED_BLUE 11 // Pino do Arduíno que envia o sinal para a cor AZUL do led RGB
   #endif // RGB
 
